@@ -18,17 +18,22 @@ class Volume extends AbstractVolume
     /**
      * @var ResourceModel\Source
      */
-    protected $source;
+    private $source;
 
     /**
      * @var ResourceModel\Destination
      */
-    protected $destination;
+    private $destination;
 
     /**
      * @var ProgressBar\LogLevelProcessor
      */
-    protected $progressBar;
+    private $progressBar;
+
+    /**
+     * @var Helper
+     */
+    private $helper;
 
     /**
      * @param Logger $logger
@@ -62,16 +67,21 @@ class Volume extends AbstractVolume
         $adapter = $this->destination->getAdapter()->getSelect()->getAdapter();
         foreach ($this->helper->getEntityTypeTablesMap() as $entityType) {
             foreach ($this->helper->getStoreIds() as $storeId) {
-                $incrementMaxNumber = $this->helper->getMaxIncrementForEntityType($entityType['entity_type_id']);
+                $incrementNumber = $this->helper->getIncrementForEntityType(
+                    $entityType['entity_type_id'],
+                    $storeId
+                );
                 $select = $adapter->select()
                     ->from($this->helper->getTableName($entityType['entity_type_table'], $storeId))
                     ->order("{$entityType['column']} DESC")
                     ->limit(1);
                 $lastInsertId = $adapter->fetchOne($select);
-                if ($incrementMaxNumber != $lastInsertId) {
+                if ($incrementNumber != $lastInsertId) {
                     $this->errors[] = sprintf(
-                        'Mismatch in last increment id of %s entity',
-                        $entityType['entity_type_code']
+                        'Mismatch in last increment id of %s entity: Source: %s Destination: %s',
+                        $entityType['entity_type_code'],
+                        $incrementNumber,
+                        $lastInsertId
                     );
                     continue 2;
                 }

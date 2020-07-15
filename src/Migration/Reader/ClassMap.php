@@ -68,7 +68,7 @@ class ClassMap
     {
         $mapFile = $this->config->getOption(self::MAP_FILE_OPTION);
         $rootDir = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR;
-        $configFile = $rootDir . $mapFile;
+        $configFile = file_exists($mapFile) ? $mapFile : $rootDir . $mapFile;
         if (!is_file($configFile)) {
             throw new Exception('Invalid map filename: ' . $configFile);
         }
@@ -87,14 +87,28 @@ class ClassMap
      * Convert class name
      *
      * @param string $className
-     * @return mixed
+     * @return null|string
      */
     public function convertClassName($className)
     {
         if (is_string($className) && array_key_exists($className, $this->getMap())) {
             return $this->getMap()[$className];
         }
-        return $className;
+        return '';
+    }
+
+    /**
+     * Has map
+     *
+     * @param string $className
+     * @return bool
+     */
+    public function hasMap($className)
+    {
+        if (is_string($className) && array_key_exists($className, $this->getMap())) {
+            return true;
+        }
+        return false;
     }
 
     /**

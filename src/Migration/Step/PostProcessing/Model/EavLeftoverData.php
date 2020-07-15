@@ -59,12 +59,12 @@ class EavLeftoverData
         /** @var \Migration\ResourceModel\Adapter\Mysql $adapter */
         $adapter = $this->destination->getAdapter();
         $selects = [];
-        foreach ($this->getDocumentsToCheck() as $document) {
+        foreach ($this->getDocuments() as $document) {
             $selects[] = $adapter->getSelect()->from(
                 ['ea' => $this->destination->addDocumentPrefix($this->eavAttributeDocument)],
                 []
             )->joinRight(
-                ['j' => $document],
+                ['j' => $this->destination->addDocumentPrefix($document)],
                 'j.attribute_id = ea.attribute_id',
                 ['attribute_id']
             )->where(
@@ -78,11 +78,11 @@ class EavLeftoverData
     }
 
     /**
-     * Get documents to check
+     * Get documents
      *
      * @return array
      */
-    public function getDocumentsToCheck()
+    public function getDocuments()
     {
         $documents = array_keys($this->readerDocument->getGroup('documents_leftover_values'));
         if ($this->editionMigrate != Config::EDITION_MIGRATE_OPENSOURCE_TO_OPENSOURCE) {
@@ -91,7 +91,6 @@ class EavLeftoverData
                 array_keys($this->readerDocument->getGroup('documents_leftover_values_ee'))
             );
         }
-        $documents = array_map([$this->destination, 'addDocumentPrefix'], $documents);
         return $documents;
     }
 }

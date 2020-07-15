@@ -5,7 +5,8 @@
  * See COPYING.txt for license details.
  */
 -->
-<groups xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="../groups.xsd">
+<groups xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+        xs:noNamespaceSchemaLocation="urn:magento:module:Magento_DataMigrationTool:etc/groups.xsd">
     <group name="documents">
         <document>eav_attribute_group</document>
         <document>eav_attribute_set</document>
@@ -52,5 +53,13 @@
         <document>eav_form_element</document>
         <document>salesrule_product_attribute</document>
         <document>weee_tax</document>
+    </group>
+    <group name="documents_attribute_set_leftover_values">
+        <document>catalog_product_entity_datetime</document>
+        <document>catalog_product_entity_decimal</document>
+        <document>catalog_product_entity_gallery</document>
+        <document>catalog_product_entity_int</document>
+        <document>catalog_product_entity_text</document>
+        <document>catalog_product_entity_varchar</document>
     </group>
 </groups>

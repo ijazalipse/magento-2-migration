@@ -5,7 +5,8 @@
  * See COPYING.txt for license details.
  */
 -->
-<map xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="../../map.xsd">
+<map xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+     xs:noNamespaceSchemaLocation="urn:magento:module:Magento_DataMigrationTool:etc/map.xsd">
     <source>
         <document_rules>
             <ignore>
@@ -132,19 +133,13 @@
                 <document>catalog_category_anc_products_index_tmp</document>
             </ignore>
             <ignore>
-                <document>catalog_category_flat_cl</document>
+                <document>catalog_product_index*</document>
             </ignore>
             <ignore>
-                <document>catalog_product_index_*</document>
-            </ignore>
-            <ignore>
-                <document>catalog_category_product_index_*</document>
+                <document>catalog_category_product_index*</document>
             </ignore>
             <ignore>
                 <document>catalog_product_enabled_index</document>
-            </ignore>
-            <ignore>
-                <document>catalog_product_flat_cl</document>
             </ignore>
             <ignore>
                 <document>cataloginventory_stock_status</document>
@@ -420,13 +415,10 @@
                 <document>s_*b_*_*</document>
             </ignore>
             <ignore>
-                <document>catalog_product_flat_*</document>
+                <document>catalog_product_flat*</document>
             </ignore>
             <ignore>
-                <document>catalog_category_flat_*</document>
-            </ignore>
-            <ignore>
-                <document>catalog_category_flat_store_*</document>
+                <document>catalog_category_flat*</document>
             </ignore>
             <ignore>
                 <document>googleoptimizer_code</document>
@@ -874,14 +866,21 @@
                 <field>catalog_category_entity_varchar.value</field>
                 <handler class="\Migration\Handler\SetValueAttributeCondition">
                     <param name="attributeCode" value="custom_design" />
-                    <param name="value" value="null" />
+                    <param name="value" value="NULL" />
+                </handler>
+            </transform>
+            <transform>
+                <field>catalog_product_entity_varchar.value</field>
+                <handler class="\Migration\Handler\SetValueAttributeCondition">
+                    <param name="attributeCode" value="custom_design" />
+                    <param name="value" value="NULL" />
                 </handler>
             </transform>
             <transform>
                 <field>catalog_category_entity_text.value</field>
                 <handler class="\Migration\Handler\SetValueAttributeCondition">
                     <param name="attributeCode" value="custom_layout_update" />
-                    <param name="value" value="null" />
+                    <param name="value" value="NULL" />
                 </handler>
             </transform>
             <transform>
@@ -1027,12 +1026,32 @@
                 <handler class="\Migration\Handler\SerializeToJson" />
             </transform>
             <transform>
+                <field>sales_flat_quote_payment.cc_number_enc</field>
+                <handler class="\Migration\Handler\Encrypt" />
+            </transform>
+            <transform>
                 <field>sales_flat_order_item.product_options</field>
                 <handler class="\Migration\Handler\SerializeToJson\SalesOrderItem" />
             </transform>
             <transform>
                 <field>sales_flat_order_payment.additional_information</field>
                 <handler class="\Migration\Handler\SerializeToJson" />
+            </transform>
+            <transform>
+                <field>sales_flat_order_payment.method</field>
+                <handler class="\Migration\Handler\Convert">
+                    <param name="map" value="[paypal_direct:payflowpro;paypal_standard:paypal_express]" />
+                </handler>
+            </transform>
+            <transform>
+                <field>sales_flat_quote_payment.method</field>
+                <handler class="\Migration\Handler\Convert">
+                    <param name="map" value="[paypal_direct:payflowpro;paypal_standard:paypal_express]" />
+                </handler>
+            </transform>
+            <transform>
+                <field>sales_flat_order_payment.cc_number_enc</field>
+                <handler class="\Migration\Handler\Encrypt" />
             </transform>
             <transform>
                 <field>sales_flat_shipment.packages</field>
@@ -1099,6 +1118,26 @@
             <transform>
                 <field>admin_user.extra</field>
                 <handler class="\Migration\Handler\SerializeToJson" />
+            </transform>
+            <transform>
+                <field>catalog_product_entity_text.value</field>
+                <handler class="\Migration\Handler\CleanMultiselect" />
+            </transform>
+            <transform>
+                <field>catalog_product_entity_varchar.value</field>
+                <handler class="\Migration\Handler\CleanMultiselect" />
+            </transform>
+            <transform>
+                <field>email_template.is_legacy</field>
+                <handler class="\Migration\Handler\SetValue">
+                    <param name="value" value="1" />
+                </handler>
+            </transform>
+            <transform>
+                <field>newsletter_template.is_legacy</field>
+                <handler class="\Migration\Handler\SetValue">
+                    <param name="value" value="1" />
+                </handler>
             </transform>
             <ignore>
                 <field>admin_rule.role_type</field>
@@ -1323,6 +1362,9 @@
                 <datatype>sales_flat_quote_payment.cc_exp_month</datatype>
             </ignore>
             <ignore>
+                <datatype>salesrule_coupon.expiration_date</datatype>
+            </ignore>
+            <ignore>
                 <datatype>weee_tax.state</datatype>
             </ignore>
             <ignore>
@@ -1409,9 +1451,6 @@
             </ignore>
             <ignore>
                 <document>signifyd_case</document>
-            </ignore>
-            <ignore>
-                <document>catalog_product_index_price*</document>
             </ignore>
             <ignore>
                 <document>customer_entity</document>
@@ -1507,10 +1546,10 @@
                 <document>layout_link</document>
             </ignore>
             <ignore>
-                <document>catalog_product_flat_*</document>
+                <document>catalog_product_flat*</document>
             </ignore>
             <ignore>
-                <document>catalog_category_flat_*</document>
+                <document>catalog_category_flat*</document>
             </ignore>
             <ignore>
                 <document>catalogindex_eav</document>
@@ -1528,10 +1567,10 @@
                 <document>customer_eav_attribute_website</document>
             </ignore>
             <ignore>
-                <document>catalog_product_index_*</document>
+                <document>catalog_product_index*</document>
             </ignore>
             <ignore>
-                <document>catalog_category_product_index_*</document>
+                <document>catalog_category_product_index*</document>
             </ignore>
             <ignore>
                 <document>catalog_product_frontend_action</document>
@@ -1630,7 +1669,7 @@
                 <document>sequence_order_*</document>
             </ignore>
             <ignore>
-                <document>sequence_shipment*</document>
+                <document>sequence_shipment_*</document>
             </ignore>
             <ignore>
                 <document>sequence_rma_item_*</document>
@@ -1975,6 +2014,27 @@
                 <document>catalog_product_entity_media_gallery_value_video</document>
             </ignore>
             <ignore>
+                <document>media_gallery_asset</document>
+            </ignore>
+            <ignore>
+                <document>media_gallery_asset_keyword</document>
+            </ignore>
+            <ignore>
+                <document>media_gallery_keyword</document>
+            </ignore>
+            <ignore>
+                <document>adobe_stock_asset</document>
+            </ignore>
+            <ignore>
+                <document>adobe_stock_category</document>
+            </ignore>
+            <ignore>
+                <document>adobe_stock_creator</document>
+            </ignore>
+            <ignore>
+                <document>adobe_user_profile</document>
+            </ignore>
+            <ignore>
                 <document>catalog_product_entity_tier_price</document>
             </ignore>
             <ignore>
@@ -2143,6 +2203,24 @@
                 <document>vertex_order_invoice_status</document>
             </ignore>
             <ignore>
+                <document>vertex_sales_creditmemo_item_invoice_text_code</document>
+            </ignore>
+            <ignore>
+                <document>vertex_sales_creditmemo_item_tax_code</document>
+            </ignore>
+            <ignore>
+                <document>vertex_sales_creditmemo_item_vertex_tax_code</document>
+            </ignore>
+            <ignore>
+                <document>vertex_sales_order_item_invoice_text_code</document>
+            </ignore>
+            <ignore>
+                <document>vertex_sales_order_item_tax_code</document>
+            </ignore>
+            <ignore>
+                <document>vertex_sales_order_item_vertex_tax_code</document>
+            </ignore>
+            <ignore>
                 <document>sequence_catalog_category</document>
             </ignore>
             <ignore>
@@ -2272,10 +2350,40 @@
                 <document>inventory_source_stock_link</document>
             </ignore>
             <ignore>
-                <document>inventory_stock</document>
+                <document>inventory_stock*</document>
             </ignore>
             <ignore>
-                <document>inventory_stock_*</document>
+                <document>inventory_geoname</document>
+            </ignore>
+            <ignore>
+                <document>admin_analytics_usage_version_log</document>
+            </ignore>
+            <ignore>
+                <document>scconnector_google_feed_cl</document>
+            </ignore>
+            <ignore>
+                <document>scconnector_google_remove_cl</document>
+            </ignore>
+            <ignore>
+                <document>temando_product_attribute_mapping</document>
+            </ignore>
+            <ignore>
+                <document>vertex_custom_option_flex_field</document>
+            </ignore>
+            <ignore>
+                <document>yotpo_rich_snippets</document>
+            </ignore>
+            <ignore>
+                <document>yotpo_sync</document>
+            </ignore>
+            <ignore>
+                <document>yotpo_order_status_history</document>
+            </ignore>
+            <ignore>
+                <document>pagebuilder_template</document>
+            </ignore>
+            <ignore>
+                <document>email_coupon_attribute</document>
             </ignore>
             <ignore>
                 <document>magento_acknowledged_bulk</document>
@@ -2306,6 +2414,9 @@
             </ignore>
             <ignore>
                 <document>msp_tfa_user_config</document>
+            </ignore>
+            <ignore>
+                <document>queue_poison_pill</document>
             </ignore>
         </document_rules>
         <field_rules>
@@ -2441,6 +2552,27 @@
                     <param name="fieldWithProductId" value="parent_product_id" />
                 </handler>
             </transform>
+            <transform>
+                <field>product_alert_price.store_id</field>
+                <handler class="\Migration\Handler\ProductAlertStoreId" />
+            </transform>
+            <transform>
+                <field>product_alert_stock.store_id</field>
+                <handler class="\Migration\Handler\ProductAlertStoreId" />
+            </transform>
+            <transform>
+                <field>quote_address_item.store_id</field>
+                <handler class="\Migration\Handler\QuoteMultiAddressStoreId" />
+            </transform>
+            <ignore>
+                <field>quote_address_item.store_id</field>
+            </ignore>
+            <ignore>
+                <field>product_alert_price.store_id</field>
+            </ignore>
+            <ignore>
+                <field>product_alert_stock.store_id</field>
+            </ignore>
             <ignore>
                 <field>catalog_product_entity_media_gallery_value.entity_id</field>
             </ignore>
@@ -3243,6 +3375,12 @@
                 <field>salesrule_coupon.generated_by_dotmailer</field>
             </ignore>
             <ignore>
+                <field>quote_address.validated_country_code</field>
+            </ignore>
+            <ignore>
+                <field>quote_address.validated_vat_number</field>
+            </ignore>
+            <ignore>
                 <field>cms_block.row_id</field>
             </ignore>
             <ignore>
@@ -3259,6 +3397,21 @@
             </ignore>
             <ignore>
                 <field>catalog_product_bundle_option_value.parent_product_id</field>
+            </ignore>
+            <ignore>
+                <field>core_config_data.updated_at</field>
+            </ignore>
+            <ignore>
+                <field>cms_page.layout_update_selected</field>
+            </ignore>
+            <ignore>
+                <field>email_template.is_legacy</field>
+            </ignore>
+            <ignore>
+                <field>newsletter_template.is_legacy</field>
+            </ignore>
+            <ignore>
+                <datatype>salesrule_coupon.expiration_date</datatype>
             </ignore>
             <ignore>
                 <datatype>quote_payment.cc_exp_month</datatype>
@@ -3283,12 +3436,6 @@
             </ignore>
             <ignore>
                 <datatype>catalog_product_bundle_price_index.customer_group_id</datatype>
-            </ignore>
-            <ignore>
-                <datatype>catalog_product_index_price.customer_group_id</datatype>
-            </ignore>
-            <ignore>
-                <datatype>catalog_product_index_tier_price.customer_group_id</datatype>
             </ignore>
             <ignore>
                 <datatype>catalogrule_customer_group.customer_group_id</datatype>
@@ -3319,12 +3466,6 @@
             </ignore>
             <ignore>
                 <datatype>catalog_product_bundle_price_index.customer_group_id</datatype>
-            </ignore>
-            <ignore>
-                <datatype>catalog_product_index_price.customer_group_id</datatype>
-            </ignore>
-            <ignore>
-                <datatype>catalog_product_index_tier_price.customer_group_id</datatype>
             </ignore>
             <ignore>
                 <datatype>catalogrule_customer_group.customer_group_id</datatype>

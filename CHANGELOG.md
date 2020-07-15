@@ -1,3 +1,110 @@
+2.3.5
+=============
+* Merge of EAV Structure of Magento 1 with Magento 2   
+* Added support for versions:
+
+   * Magento Open Source: 2.3.5, 1.9.4.5
+   * Magento Commerce: 2.3.5, 1.14.4.5
+
+* Fixed bugs:
+
+   * Error `Base table or view not found` during migration from Open Source to Commerce
+   * Recurring Profile attributes are migrated but Magento 2 does not support Recurring Payments anymore
+   * Error of enterprise-tables not being present in opensource database
+   * Trouble with password hashes
+   * Add missed delta functionality to ConfigurablePrices Step
+   * Keeping sequence product / sequence catalog category updated
+   * Wildcard must represent zero or more character
+   * Reducing the number of validate type calls while reading data from the map.xml file
+   * Cannot migrate settings if settings.xml file is out of Data Migration Tool root directory
+   * Volume check is run for index tables of catalog rule
+   * Initializing the record transformer before the loop
+   * [Issue #541](https://github.com/magento/data-migration-tool/issues/541): Don't migrate the attribute url_path from product entities
+   * [Issue #791](https://github.com/magento/data-migration-tool/issues/791): Error during migration when use prefix for tables
+   
+2.3.4
+=============
+* Added ability for Data Migration Tool to load group-xml files outside its own directory   
+* Added support for versions:
+
+   * Magento Open Source: 2.3.4, 1.9.4.4
+   * Magento Commerce: 2.3.4, 1.14.4.4
+
+* Fixed bugs:
+
+   * Error during migration to Magento Commerce when Staging module not installed   
+   * Error documents are not mapped catalog_category_flat when migrating Magento 1 with flat tables
+   * Multiple queries can't be executed error when add several SQL init statements before Magento 1 store migration
+   * If product_url_suffix is null then it slows down migration
+   * Dropdowns Missing On Frontend After Migration
+   * Empty categories after migration
+   * No necessary product index tables are migrated
+   * Mismatch of entities in the document warnings with the tables which are not part of delta migration
+   * Volume check throws Warnings on Delta migration for catalog tables when products with multiselect attribute were changed on Magento 1
+   * Volume checks are not run on Delta without
+   * Error Base table or view not found when using prefix in Magento 2 DB tables
+   * [Issue #727](https://github.com/magento/data-migration-tool/issues/727): Admin URL not working after migration
+   * [Issue #731](https://github.com/magento/data-migration-tool/issues/731): Next order increment Id duplicates for different store view after migratio
+   * [Issue #738](https://github.com/magento/data-migration-tool/issues/738): Load test classes from autoload-dev block
+   * [Issue #746](https://github.com/magento/data-migration-tool/issues/746): Error array_key_exists() expects parameter 2 to be array on Map step
+   * [Issue #760](https://github.com/magento/data-migration-tool/issues/760): More info about record field
+   * [Issue #775](https://github.com/magento/data-migration-tool/issues/775): Delta rewrite URL CE step not using database prefix correctly
+
+2.3.3
+=============
+* Improvements in Delta migration. Now it can migrate new or changed in admin panel products and categories
+* Added ability for Data Migration Tool to load map files outside its own directory   
+* Added support for versions:
+
+   * Magento Open Source: 2.3.3, 1.9.4.3
+   * Magento Commerce: 2.3.3, 1.14.4.3
+
+* Fixed bugs:
+
+   * Url rewrites duplicates resoled incorrect with several websites   
+   * Generation of URN in PhpStorm does not work for Data Migration Tool
+   * Error during migration from text type table to varchar type table when no custom multiselect attribute data exist
+   * Target Rules throws error on Delta migration
+   * Error message was hidden by progress bar during migration in UrlRewrites step 
+   * [Issue #646](https://github.com/magento/data-migration-tool/issues/646): Migrated products with multiselect attribute do not show in layered navigation
+   * [Issue #659](https://github.com/magento/data-migration-tool/issues/659): Error duplicate entry appears then core_store_group.name has duplicates
+   * [Issue #664](https://github.com/magento/data-migration-tool/issues/664): Custom category attributes disappear on category save after migration
+   * [Issue #708](https://github.com/magento/data-migration-tool/issues/708): Missing Table Prefix in PostProcessing Step 
+   * [Issue #715](https://github.com/magento/data-migration-tool/issues/715): StockSalesChannel does not remove original record from installation prior to insertion of new records 
+
+2.3.2
+=============
+* Added support for versions:
+
+   * Magento Open Source: 2.3.2, 1.9.4.2 
+   * Magento Commerce: 2.3.2, 1.14.4.2
+
+* Fixed bugs:
+
+   * M1 Super Product Attribute to M2 Configuration setting wrong Price
+   * [Issue #682](https://github.com/magento/data-migration-tool/issues/682): Incorrect url rewrite record pagination
+   * [Issue #685](https://github.com/magento/data-migration-tool/issues/685): Payment method is not available error after migration
+   * [Issue #598](https://github.com/magento/data-migration-tool/issues/598): Error in system.log about migrated attribute which is not included into attribute group
+   * [Issue #677](https://github.com/magento/data-migration-tool/issues/677): Data migration fails due to invalid regex in widget placeholder handler 
+
+2.3.1
+=============
+* Added support for versions:
+
+   * Magento Open Source: 2.3.1, 1.9.4.1 
+   * Magento Commerce: 2.3.1, 1.14.4.1
+
+* Fixed bugs:
+
+   * Encrypt sensitive data with libsodium
+   * [Issue #607](https://github.com/magento/data-migration-tool/issues/607): SalesIncrement Step showed unclear error message
+   * [Issue #615](https://github.com/magento/data-migration-tool/issues/615): Next generated increment id was based on the highest increment number from all stores after migration
+   * [Issue #574](https://github.com/magento/data-migration-tool/issues/574): Required price field appeared on migrated Grouped products
+   * [Issue #235](https://github.com/magento/data-migration-tool/issues/235): EAV step did not revert tables of M2 in case of error
+   * [Issue #461](https://github.com/magento/data-migration-tool/issues/461): Virtual classes in Magento 2 caused error on migrating EAV data
+   * [Issue #632](https://github.com/magento/data-migration-tool/issues/632): Error when serialized value had false type
+   * [Issue #651](https://github.com/magento/data-migration-tool/issues/651): The Data Migration Tool did not notify user when Magento DB uses prefix in tables name
+
 2.3.0
 =============
 * Added support for versions:

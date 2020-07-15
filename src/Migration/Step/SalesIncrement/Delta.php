@@ -75,13 +75,14 @@ class Delta extends AbstractDelta
         /** @var \Magento\Framework\DB\Adapter\Pdo\Mysql $adapter */
         $adapter = $this->destination->getAdapter()->getSelect()->getAdapter();
         $entityType = $this->helper->getEntityTypeData('entity_type_id', $data['entity_type_id']);
-        $incrementMaxNumber = $this->helper->getMaxIncrementForEntityType($data['entity_type_id']);
-        if ($incrementMaxNumber === false || empty($entityType)) {
+        $incrementNumber = $this->helper->getIncrementForEntityType(
+            $data['entity_type_id'],
+            $data['store_id']
+        );
+        if ($incrementNumber === false || empty($entityType)) {
             return;
         }
-        foreach ($this->helper->getStoreIds() as $storeId) {
-            $tableName = $this->helper->getTableName($entityType['entity_type_table'], $storeId);
-            $adapter->insertOnDuplicate($tableName, [$entityType['column'] => $incrementMaxNumber]);
-        }
+        $tableName = $this->helper->getTableName($entityType['entity_type_table'], $data['store_id']);
+        $adapter->insertOnDuplicate($tableName, [$entityType['column'] => $incrementNumber]);
     }
 }
